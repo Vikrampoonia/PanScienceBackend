@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {Trash2} from 'lucide-react';
+import DashboardLayout from "../../layout/DashBoardLayout";
 
 const TaskEdit = () => {
   const navigate = useNavigate();
@@ -58,7 +59,8 @@ const TaskEdit = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-lg">
+    <DashboardLayout>
+      <div className="bg-white p-8 rounded-lg shadow-lg">
       <h1 className="text-2xl font-semibold mb-6">Edit Task</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -159,7 +161,7 @@ const TaskEdit = () => {
               {file && <span className="text-xs text-gray-600 truncate max-w-[100px]">{file.name}</span>}
               <button
                 type="button"
-                label="Remove"
+                title="Remove"
                 onClick={() => removeAttachmentField(index)}
                 className="text-red-500 hover:underline text-sm"
               >
@@ -206,7 +208,8 @@ const TaskEdit = () => {
             </div>
         </div>
       </form>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 };
 
