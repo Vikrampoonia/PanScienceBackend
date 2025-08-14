@@ -1,6 +1,6 @@
 import  { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
-import AuthLayout from "../../layouts/AuthLayout";
+import AuthLayout from "../../layout/AuthLayout";
 
 // A functional component for displaying validation errors
 const ValidationError = ({ message }) => {
@@ -41,11 +41,42 @@ const Login = () => {
     if (!password) {
       newErrors.password = 'Password is required.';
       isValid = false;
-    } 
+    }else if(password.length<4)
+    {
+      newErrors.password = 'Password of 4 character allowed.';
+      isValid = false;
+    }
 
     setErrors(newErrors);
     return isValid;
   };
+
+
+  const handleEmailPass =(val,label)=>{
+    const newErrors = { email: null, password: null};
+    if(label == "email")
+    {
+      if (!/\S+@\S+\.\S+/.test(val)) 
+      {
+        newErrors.email = 'Email is not valid.';
+      }
+      setEmail(val);
+    }
+    else
+    {
+      if(val.length < 4) 
+      {
+        newErrors.password = 'Password of  4 character allowed.';
+      }
+      if( val.length<=4)
+      {
+          setPassword(val);
+      }
+
+    }
+      
+    setErrors(newErrors);
+  }
 
   // --- Form Submission ---
   const handleSubmit = (e) => {
@@ -83,7 +114,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => handleEmailPass(e.target.value,"email")}
                   placeholder="you@example.com"
                   className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                     errors.email ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
@@ -104,7 +135,7 @@ const Login = () => {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => handleEmailPass(e.target.value,"password")}
                   placeholder="••••••••"
                   className={`w-full pl-10 pr-10 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
                     errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'
@@ -137,7 +168,7 @@ const Login = () => {
           {/* Footer */}
           <p className="text-center text-sm text-gray-500">
             Already have an account?{' '}
-            <a href="#" className="font-medium text-blue-600 hover:underline">
+            <a href="/register" className="font-medium text-blue-600 hover:underline">
               Register here
             </a>
           </p>
